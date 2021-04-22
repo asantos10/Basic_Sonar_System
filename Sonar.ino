@@ -50,9 +50,10 @@ void loop() {
     a=sr04.DistanceAvg(1,5); 
     
    // delay(5);   
-   //for(int j=0;j<10;j+=1)               
-    y[i++]=int(a*abs(sin(pos*3.1415/180.0))); //stores into array, starting y[0],until it reaches 115 deg. 
-                                            //
+   //for(int j=0;j<10;j+=1)     
+     
+   y[i++]=int(a*abs(sin(pos*3.1415/180.0))); //stores into array, starting y[0],until it reaches 115 deg. 
+                                            //increases the index every loop,
                                             //
     Serial.println(y[i-1]);//will print out value, at every loop it prints out the value of of the last calculated
                            //...now converted linear distance stored in an array index. ex. i = 1, prints value at i = 0, etc.
@@ -61,19 +62,21 @@ void loop() {
 
 //pos=pos-1;
 delay(100);
-i=i-1;//
+i=i-1;//wherever the last i was, subtract one less..should be within 115 or 114...
+      //
 
  for(pos=115; pos >= 65; pos-=1)
    {
-    myservo.write(pos);
+    myservo.write(pos);// initializes into last position from last loop 115deg
     delay(15);
     a=sr04.DistanceAvg(1,5);
     //delay(5); 
     //for(int j=0;j<10;j+=1)  
-    y[i--]=int(a*abs(sin(pos*3.1415/180.0)));
-    Serial.println(y[i+1]);
+    y[i--]=int(a*abs(sin(pos*3.1415/180.0)));//
+    Serial.println(y[i+1]); //prints from current spot, since its decreasing in array index, then add one for the last
+                            //value in the loop
    } 
    //Serial.println(i);
-   pos=pos+1;  
+   pos=pos+1;  //maybe restarts i and position once again to sweep
      i=i+1; 
  }
